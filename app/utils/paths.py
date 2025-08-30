@@ -1,4 +1,8 @@
-"""Helpers for resolving resource paths in dev and PyInstaller onefile builds."""
+"""Helpers for resolving resource paths and persistent runtime storage.
+
+Includes:
+- Base path resolution for bundled assets (dev and PyInstaller)
+"""
 
 from __future__ import annotations
 
@@ -32,3 +36,30 @@ def asset_path(relative: str) -> Path:
             return cand
     # Return first candidate even if missing; caller can handle absence
     return base_path() / "app" / "assets" / relative
+
+
+# ----- Persistent runtime storage under C:/Users/[user]/SnapPDF -----
+
+def user_data_dir() -> Path:
+    """Return the persistent user data directory for SnapPDF.
+
+    On Windows: C:/Users/[user]/SnapPDF
+    On other OSes, it resolves to the user's home directory / "SnapPDF".
+    """
+    return Path.home() / "SnapPDF"
+
+
+def captures_dir() -> Path:
+    """Return the captures directory under the user data dir."""
+    return user_data_dir() / "captures"
+
+
+def output_pdf_path() -> Path:
+    """Return the default output.pdf path under the user data dir."""
+    return user_data_dir() / "output.pdf"
+
+
+def ensure_runtime_dirs() -> None:
+    """Create the persistent runtime directories if they don't exist."""
+    user_data_dir().mkdir(parents=True, exist_ok=True)
+    captures_dir().mkdir(parents=True, exist_ok=True)
