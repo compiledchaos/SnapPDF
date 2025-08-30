@@ -8,3 +8,4 @@ dist/
 SnapPDF.spec
 warn-SnapPDF.txt
 build.ps1
+scripts/
