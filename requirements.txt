@@ -1,0 +1,5 @@
+PySide6
+pyautogui
+keyboard
+img2pdf
+pillow
