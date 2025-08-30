@@ -3,3 +3,8 @@ __pycache__/
 logs/
 captures/
 output.pdf
+build/
+dist/
+SnapPDF.spec
+warn-SnapPDF.txt
+build.ps1
