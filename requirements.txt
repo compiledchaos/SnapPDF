@@ -3,3 +3,5 @@ pyautogui
 keyboard
 img2pdf
 pillow
+pyinstaller
+pytest
