@@ -9,6 +9,8 @@ A lightweight desktop tool to batch-capture screenshots of a selected screen reg
 - Images saved under `C:/Users/<your-user>/SnapPDF/captures/`.
 - PDF export to `C:/Users/<your-user>/SnapPDF/output.pdf`.
 
+## You may download the exe in the "Download" folder or follow the instructions below.
+
 ## Requirements
 - Windows 10/11
 - Python 3.11+
