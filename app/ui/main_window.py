@@ -3,9 +3,10 @@
 Handles area selection, screenshotting, auto-clicking, and start flow coordination.
 """
 
-from PySide6.QtWidgets import QMainWindow
+from PySide6.QtWidgets import QMainWindow, QFrame
 from PySide6.QtGui import QIcon, QGuiApplication
-from PySide6.QtCore import QEventLoop
+from PySide6.QtCore import QEventLoop, QUrl, QTimer
+from PySide6.QtWebEngineWidgets import QWebEngineView
 from .main_window_ui import Ui_MainWindow
 from app.utils.logger import get_logger
 from app.utils.paths import asset_path
@@ -22,6 +23,24 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+
+        # Divider between app controls and the ad
+        self.ad_divider = QFrame(self)
+        self.ad_divider.setFrameShape(QFrame.HLine)
+        self.ad_divider.setFrameShadow(QFrame.Sunken)
+
+        # Ad view (WebEngine) at the bottom of the main layout
+        self.ad_view = QWebEngineView(self)
+        self.ad_view.setMinimumHeight(300)
+        self.ad_view.setMaximumHeight(250)
+        self.ad_view.load(QUrl("https://bold-silence-271b.sachinprathik8.workers.dev/"))
+
+        # Place divider and ad at the bottom of the layout
+        self.layout.addWidget(self.ad_divider)
+        self.layout.addWidget(self.ad_view)
+
+        # Start periodic ad refresh
+        self.setup_ad_refresh()
 
         self.pageInput.textChanged.connect(self.update_ui)
         self.intervalInput.textChanged.connect(self.update_ui)
@@ -98,3 +117,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 logger.warning(f"Failed to set window icon from {icon_path}: {e}")
         else:
             logger.debug("No book icon found in assets; using default icon")
+
+    def setup_ad_refresh(self):
+        self.ad_timer = QTimer(self)
+        self.ad_timer.timeout.connect(lambda: self.ad_view.reload())
+        self.ad_timer.start(60_000)
