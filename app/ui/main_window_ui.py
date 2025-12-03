@@ -20,7 +20,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(300, 600)
+        MainWindow.resize(300, 400)
 
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -28,7 +28,7 @@ class Ui_MainWindow(object):
         # Frame
         self.frame = QFrame(self.centralwidget)
         self.frame.setObjectName("frame")
-        self.frame.setGeometry(0, 0, 300, 600)
+        self.frame.setGeometry(0, 0, 300, 400)
 
         # Use vertical layout inside the frame
         self.layout = QVBoxLayout(self.frame)
